@@ -1,0 +1,10 @@
+moduloA/estoque_pb2_grpc.py
+moduloA/estoque_pb2.py
+moduloA/__pycache__/
+
+moduloB/pagamento_pb2_grpc.py
+moduloB/pagamento_pb2.py
+moduloB/__pycache__/
+
+moduloP/node_modules/
+moduloP/webClient/node_modules/

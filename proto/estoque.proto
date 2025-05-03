@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package estoque;
+
+service EstoqueService {
+  rpc VerificarDisponibilidade(PedidoEstoque) returns (RespostaEstoque);
+  rpc AtualizarEstoque(PedidoEstoque) returns (RespostaEstoque);
+}
+
+message PedidoEstoque {
+  string produto_id = 1;
+  int32 quantidade = 2;
+}
+
+message RespostaEstoque {
+  bool disponivel = 1;
+  string mensagem = 2;
+}
