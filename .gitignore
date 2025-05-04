@@ -5,6 +5,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Dotnet
+moduloA/bin/
+moduloA/obj/
+
 # Python
 __pycache__/
 *.py[cod]
@@ -12,15 +16,13 @@ __pycache__/
 *.pyd
 *_pb2*.py
 
-# Protobuf stubs (opcional: manter se preferir não gerar toda vez)
-# moduloA/estoque_pb2*.py
-# moduloB/pagamento_pb2*.py
-
 # React + Vite
 dist/
 .vite/
 *.svg
 .DS_Store
+moduloP/package-lock.json
+moduloP/webClient/package-lock.json
 
 # IDEs e editores
 .vscode/
