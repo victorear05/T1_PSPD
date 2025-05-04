@@ -1,16 +1,25 @@
 using GrpcServerA.Services;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Força o uso de HTTP/2 sem HTTPS (para compatibilidade com grpc-js)
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5000, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http2;
+    });
+});
+
 builder.Services.AddGrpc();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-app.MapGrpcService<GrpcServerA.Services.ProductServiceImpl>();
-app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+// Mapeia o serviço gRPC implementado
+app.MapGrpcService<ProductServiceImpl>();
 
-
+// Endpoint opcional para acessar no navegador
+app.MapGet("/", () => "Este serviço é gRPC. Use um client gRPC para se conectar.");
 
 app.Run();

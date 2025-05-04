@@ -7,16 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.30.2" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
-    <PackageReference Include="Grpc.Tools" Version="2.71.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.57.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Protobuf Include="../proto/estoque.proto" GrpcServices="Server" />
-  </ItemGroup>
+<ItemGroup>
+  <Protobuf Include="../proto/produto.proto" GrpcServices="Server" />
+</ItemGroup>
+
 
 </Project>
