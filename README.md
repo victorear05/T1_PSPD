@@ -1,47 +1,21 @@
-# Sistema de Compras
+# 🛒 Sistema de Compras Distribuído com gRPC
 
-Um sistema de compras que usa Javascript e React como Web Server/Web Client, e Python nos servidores que processam o estoque e o pagamento.
+Este projeto implementa um sistema de compras distribuído baseado em **microserviços com gRPC**, utilizando três módulos:
 
-## Executando
-### Compilação
-Compilar a servidor de estoque:
-```
-cd proto/
-python3 -m grpc_tools.protoc -I. --python_out=../moduloA --grpc_python_out=../moduloA estoque.proto
-```
-Compilar a servidor de pagamento:
-```
-cd proto/
-python3 -m grpc_tools.protoc -I. --python_out=../moduloB --grpc_python_out=../moduloB pagamento.proto
-```
-Compilar o Web Server:
-```
-cd moduloP/
-npm install
-```
-Compilar o Web Client:
-```
-cd moduloP/webClient/
-npm install
-```
-### Execução
-Executar a servidor de estoque:
-```
-cd moduloA/
-python3 servidor_estoque.py
-```
-Compilar a servidor de pagamento:
-```
-cd proto/
-python3 servidor_pagamento.py
-```
-Compilar o Web Server:
-```
-cd moduloP/
-node index.js
-```
-Compilar o Web Client:
-```
-cd moduloP/webClient/
-npm run dev
-```
+- **Módulo P**: API Gateway + Frontend em React (Node.js)
+- **Módulo A**: Microserviço de Estoque (Python + gRPC)
+- **Módulo B**: Microserviço de Pagamento (Python + gRPC)
+
+---
+
+## ✅ Pré-requisitos
+
+- **Node.js** (v18 ou superior)
+- **Python 3.10+**
+- **pip**
+- **protoc (Protocol Buffers Compiler)**
+
+### Bibliotecas Python necessárias:
+
+```bash
+pip install grpcio grpcio-tools

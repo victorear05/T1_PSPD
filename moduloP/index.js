@@ -21,10 +21,10 @@ const pagamentoProto = grpc.loadPackageDefinition(pagamentoPackageDef).pagamento
 
 // Clientes gRPC
 const estoqueClient = new estoqueProto.EstoqueService(
-  'localhost:50051', grpc.credentials.createInsecure()
+  'moduloa:50051', grpc.credentials.createInsecure()
 );
 const pagamentoClient = new pagamentoProto.PagamentoService(
-  'localhost:50052', grpc.credentials.createInsecure()
+  'modulob:50052', grpc.credentials.createInsecure()
 );
 
 // Endpoint HTTP para simular compra
