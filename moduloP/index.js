@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const grpcClient = require('./grpcClient');
+const grpcClientPagamento = require('./grpcClientPagamento');
 
 app.use(express.json());
 
@@ -24,6 +25,26 @@ app.get('/produtos/:id', (req, res) => {
     } else {
       res.json(produto);
     }
+  });
+});
+
+app.post('/comprar', (req, res) => {
+  const { produto_id, quantidade } = req.body;
+  grpcClientPagamento.calcularDesconto(produto_id, quantidade, (err, response) => {
+    if (err) {
+      return res.status(500).json({ erro: 'Erro ao calcular desconto' });
+    }
+    res.json(response);
+  });
+});
+
+app.post('/frete', (req, res) => {
+  const { cep } = req.body;
+  grpcClientPagamento.calcularFrete(cep, (err, response) => {
+    if (err) {
+      return res.status(500).json({ erro: 'Erro ao calcular frete' });
+    }
+    res.json(response);
   });
 });
 

@@ -3,16 +3,25 @@ syntax = "proto3";
 package pagamento;
 
 service PagamentoService {
-  rpc ProcessarPagamento (RequisicaoPagamento) returns (RespostaPagamento);
+  rpc CalcularDesconto (PagamentoRequest) returns (PagamentoResponse);
+  rpc CalcularFrete (FreteRequest) returns (FreteResponse);
 }
 
-message RequisicaoPagamento {
-  string pedido_id = 1;
-  double valor = 2;
-  string metodo = 3;
+message PagamentoRequest {
+  string produto_id = 1;
+  int32 quantidade = 2;
 }
 
-message RespostaPagamento {
-  bool sucesso = 1;
-  string mensagem = 2;
+message PagamentoResponse {
+  float preco_total = 1;
+  float desconto = 2;
+  float preco_final = 3;
+}
+
+message FreteRequest {
+  string cep = 1;
+}
+
+message FreteResponse {
+  float valor_frete = 1;
 }
