@@ -19,7 +19,7 @@ const productProto = grpc.loadPackageDefinition(packageDefinition).product;
 
 // Cria o cliente gRPC
 const client = new productProto.ProductService(
-  'localhost:5000',
+  'http://192.168.100.11:5000',
   grpc.credentials.createInsecure()
 );
 
