@@ -13,7 +13,7 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 const pagamentoProto = grpc.loadPackageDefinition(packageDefinition).pagamento;
 
 const client = new pagamentoProto.PagamentoService(
-  'localhost:5002',
+  'http://192.168.100.12:5002',
   grpc.credentials.createInsecure()
 );
 
