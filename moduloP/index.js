@@ -2,15 +2,26 @@ const express = require('express');
 const app = express();
 const grpcClient = require('./grpcClient');
 const grpcClientPagamento = require('./grpcClientPagamento');
+const cors = require('cors');
 
-app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:3000', // ou a porta do seu frontend
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
+}));
 
+// Rota para listar todos os produtos
 // Rota para listar todos os produtos
 app.get('/produtos', (req, res) => {
   grpcClient.listarProdutos((error, produtos) => {
     if (error) {
-      res.status(500).json({ error: 'Erro ao listar produtos' });
+      console.error('Detalhes do erro gRPC:', error);
+      res.status(500).json({ 
+        error: 'Erro ao listar produtos',
+        details: error.details || error.message 
+      });
     } else {
+      console.log('Produtos recebidos:', produtos); // Adicione este log
       res.json(produtos);
     }
   });
@@ -30,21 +41,61 @@ app.get('/produtos/:id', (req, res) => {
 
 app.post('/comprar', (req, res) => {
   const { produto_id, quantidade } = req.body;
+  
+  console.log('Recebida requisição para /comprar:', { produto_id, quantidade }); // Log de debug
+
+  if (!produto_id || !quantidade) {
+    return res.status(400).json({ error: 'produto_id e quantidade são obrigatórios' });
+  }
+
   grpcClientPagamento.calcularDesconto(produto_id, quantidade, (err, response) => {
     if (err) {
-      return res.status(500).json({ erro: 'Erro ao calcular desconto' });
+      console.error('Erro no serviço de pagamento:', {
+        message: err.message,
+        code: err.code,
+        details: err.details
+      });
+      return res.status(500).json({ 
+        error: 'Erro ao calcular desconto',
+        details: err.details || err.message 
+      });
     }
-    res.json(response);
+    console.log('Resposta do serviço de pagamento:', response);
+    res.json({
+      preco_total: response.preco_total,
+      desconto: response.desconto,
+      preco_final: response.preco_final,
+      mensagem: "Desconto calculado com sucesso"
+    });
   });
 });
 
 app.post('/frete', (req, res) => {
   const { cep } = req.body;
+  
+  console.log('Recebida requisição para /frete:', { cep }); // Log de debug
+
+  if (!cep) {
+    return res.status(400).json({ error: 'CEP é obrigatório' });
+  }
+
   grpcClientPagamento.calcularFrete(cep, (err, response) => {
     if (err) {
-      return res.status(500).json({ erro: 'Erro ao calcular frete' });
+      console.error('Erro no serviço de frete:', {
+        message: err.message,
+        code: err.code,
+        details: err.details
+      });
+      return res.status(500).json({ 
+        error: 'Erro ao calcular frete',
+        details: err.details || err.message 
+      });
     }
-    res.json(response);
+    console.log('Resposta do serviço de frete:', response);
+    res.json({
+      valor_frete: response.valor_frete,
+      mensagem: "Frete calculado com sucesso"
+    });
   });
 });
 

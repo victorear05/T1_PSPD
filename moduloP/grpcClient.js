@@ -27,7 +27,7 @@ const client = new productProto.ProductService(
 function listarProdutos(callback) {
   client.ListProducts({}, (error, response) => {
     if (error) {
-      console.error('Erro ao listar produtos:', error);
+      console.error(`Erro ao obter produto com ID ${id}:`, error);
       callback(error, null);
     } else {
       callback(null, response.products); // usa o nome correto no response
