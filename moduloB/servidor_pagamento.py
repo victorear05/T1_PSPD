@@ -5,13 +5,18 @@ import pagamento_pb2_grpc
 
 class PagamentoServiceServicer(pagamento_pb2_grpc.PagamentoServiceServicer):
     def CalcularDesconto(self, request, context):
-        produto_id = request.produto_id
+        valorProduto = request.valor
         quantidade = request.quantidade
-        preco_unitario = 100.0  # exemplo fixo
 
-        preco_total = preco_unitario * quantidade
-        desconto = preco_total * 0.1 if quantidade >= 5 else 0.0
+        print(f"Requisição recebida: ProcessarPagamento(valor={valorProduto}, valor={quantidade})\n")
+
+        preco_total = valorProduto * quantidade
+        desconto = preco_total * 0.05 if quantidade >= 2 else 0.0
         preco_final = preco_total - desconto
+
+        print(f"Preço total calculado em: R$ {preco_total}\n")
+        print(f"Desconto calculado em: R$ {desconto}\n")
+        print(f"Preço final calculado em: R$ {preco_final}\n")
 
         return pagamento_pb2.PagamentoResponse(
             preco_total=preco_total,
@@ -21,7 +26,15 @@ class PagamentoServiceServicer(pagamento_pb2_grpc.PagamentoServiceServicer):
 
     def CalcularFrete(self, request, context):
         cep = request.cep
-        valor_frete = 20.0 if cep.startswith("7") else 40.0
+
+        print(f"Requisição recebida: CalcularFrete(cep={cep})\n")
+        
+        primeiro = int(cep[0])
+        ultimo = int(cep[-1])
+        valor_frete = (primeiro + ultimo) * 10
+        valor_frete = min(valor_frete, 100.0)
+
+        print(f"Frete calculado em: R$ {valor_frete}\n")
 
         return pagamento_pb2.FreteResponse(
             valor_frete=valor_frete

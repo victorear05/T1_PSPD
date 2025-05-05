@@ -8,7 +8,7 @@ service PagamentoService {
 }
 
 message PagamentoRequest {
-  string produto_id = 1;
+  float valor = 1;
   int32 quantidade = 2;
 }
 

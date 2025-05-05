@@ -3,7 +3,7 @@
 Este projeto implementa um sistema de compras distribuído baseado em **microserviços com gRPC**, utilizando três módulos:
 
 - **Módulo P**: API Gateway + Frontend em React (Node.js)
-- **Módulo A**: Microserviço de Estoque (Python.NET + gRPC)
+- **Módulo A**: Microserviço de Estoque (.NET + gRPC)
 - **Módulo B**: Microserviço de Pagamento (Python + gRPC)
 
 ---

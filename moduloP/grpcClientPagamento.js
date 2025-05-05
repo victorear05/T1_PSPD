@@ -17,8 +17,8 @@ const client = new pagamentoProto.PagamentoService(
   grpc.credentials.createInsecure()
 );
 
-function calcularDesconto(produto_id, quantidade, callback) {
-  client.CalcularDesconto({ produto_id, quantidade }, callback);
+function calcularDesconto(valor, quantidade, callback) {
+  client.CalcularDesconto({ valor, quantidade }, callback);
 }
 
 function calcularFrete(cep, callback) {
